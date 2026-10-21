@@ -1,16 +1,47 @@
 name: Deploy HTML site to Azure
-on: push: branches: - principal workflow_dispatch:
-jobs: deploy: runs-on: ubuntu-latest steps: - name: Get source code uses: actions/checkout@v4
-  - name: Prepare website
-    run: |
-      mkdir -p deploy
-      cp index.html deploy/index.html
-      cd deploy
-      zip -r ../website.zip .
 
-  - name: Deploy to Azure
-    uses: azure/webapps-deploy@v3
-    with:
-      app-name: MOHAMED
-      publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-      package: website.zip
+on:
+
+  push:
+
+    branches:
+
+      - principal
+
+  workflow_dispatch:
+
+jobs:
+
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Get source code
+
+        uses: actions/checkout@v4
+
+      - name: Prepare website
+
+        run: |
+
+          mkdir -p deploy
+
+          cp index.html deploy/index.html
+
+          cd deploy
+
+          zip -r ../website.zip .
+
+      - name: Deploy to Azure
+
+        uses: azure/webapps-deploy@v3
+
+        with:
+
+          app-name: MOHAMED
+
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+
+          package: website.zip
